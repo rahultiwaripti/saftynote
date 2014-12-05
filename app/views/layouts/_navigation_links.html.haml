@@ -1,0 +1,75 @@
+:css
+  ul{list-style:none;}
+  ul.navigation.menu.fusion-navbar-nav a{
+    text-transform: uppercase;
+    font-weight: normal;
+    font-size: 13px;
+    font-family: 'HelveticaNeue' !important;
+  }
+  .sticky-menu li{
+    margin-left: 5px;
+  }
+
+- if user_signed_in?
+  - if current_user.admin?
+    %li= link_to 'Providers', companymembers_path
+    %li= link_to 'Loved Ones', lovedones_path
+    %li= link_to 'Sponsors', sponsors_path
+    %li= link_to 'Leads', profile_leads_path(current_user.profile)
+    %li= link_to 'Notifications', notifications_path
+    %li= link_to 'Reports', admin_dashboard_path
+    %li= link_to 'Primary Contact', admin_primary_contacts_path
+    %li= link_to 'Familiy Members', familymembers_path
+    %li= link_to 'Settings', settings_path
+    /%li= link_to 'Familiy Member', admin_followers_path
+  / loved ones are accessed by only users ie., family members/primary cont
+  - if current_user.user?
+    %li= link_to 'Familiy Member', familymembers_path
+    %li= link_to 'Loved Ones', lovedones_path
+    - unless current_user.lovedones.first.employee.nil?
+      %li= link_to 'Track', controller: "employees", action: "track_employee", id: current_user.lovedones.first.employee
+    - if current_user.primary_contact?
+      %li= link_to 'Leads', profile_leads_path(current_user.profile)
+
+  / if user has company profile
+  - if current_user.serviceprovider?
+    %li= link_to 'Manage Employees', company_employees_path(current_user.company)
+    %li= link_to 'My Company', edit_companymember_path(current_user)
+    %li= link_to 'Track', controller: "employees", action: "track", company_id: current_user.company
+    %li= link_to 'Messages', messages_path
+- else
+  %ul.navigation.menu.fusion-navbar-nav
+    %li#menu-item-9798.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item-9798
+      %a{"aria-haspopup" => "true", :style => "cursor: pointer;", :href=>"http://safetynotice.com/"}
+        Home
+        %span{:class => "#holes"}
+    %li#menu-item-9799.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item-9799
+      %a{"aria-haspopup" => "true", :style => "cursor: pointer;", :href=>"http://safetynotice.com/#features"}
+        Features
+        %span{:class => "#features"}
+    %li#menu-item-10310.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item-10310
+      %a{"aria-haspopup" => "true", :style => "cursor: pointer;", :href=>"http://safetynotice.com/#pages"}
+        About
+        %span{:class => "#pages"}
+    %li#menu-item-9801.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item-9801
+      %a{"aria-haspopup" => "true", :style => "cursor: pointer;", :href=>"http://safetynotice.com/#woocommerce"}
+        Applications
+        %span{:class => "#woocommerce"}
+    %li#menu-item-9802.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item-9802
+      %a{"aria-haspopup" => "true", :style => "cursor: pointer;", :href=>"http://safetynotice.com/#demo"}
+        How It Works
+        %span{:class => "#demo"}
+    %li#menu-item-9803.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item-9803
+      %a{"aria-haspopup" => "true", :style => "cursor: pointer;", :href=>"http://safetynotice.com/#shortcodes"}
+        GPS Tracking
+        %span{:class => "#shortcodes"}
+    %li#menu-item-9804.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item-9804
+      %a{"aria-haspopup" => "true", :style => "cursor: pointer;", :href=>"http://safetynotice.com/#reviews"}
+        Enrollment
+        %span{:class => "#reviews"}
+    %li#menu-item-10282.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item-10282
+      %a{"aria-haspopup" => "true", :style => "cursor: pointer;", :href=>"http://safetynotice.com/#contact"}
+        contact
+        %span{:class => "#contact"}
+    %li#menu-item-10304.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item-10304
+      %a#login_href.cboxElement{"aria-haspopup" => "true", :href => "/users/sign_in"} Login

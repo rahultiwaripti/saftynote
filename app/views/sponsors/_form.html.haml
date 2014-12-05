@@ -1,0 +1,69 @@
+= simple_form_for(@sponsor, html: {class: 'form-horizontal'}) do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :name
+    = f.input :address
+    = f.input :city
+    = f.input :state, collection: us_states
+    = f.input :county, collection: []
+    = f.input :zip
+    = f.input :phone
+    = f.input :email
+    = f.input :contact_last_name
+    = f.input :contact_first_name
+    = f.input :sponsor_ship_type
+    = f.input :sponsortype, collection: Sponsor::sponsortypes
+    .form-group.file.optional.sponsor_picture
+      %label.select.required.col-lg-2.control-label
+        Advertise image
+      .col-lg-7
+        = f.input_field :picture, :class=>'file optional form-control', :label1=>false, :label=>'Advertise Image', :"data-url" => "/sponsors/1"
+      .col-lg-3 
+        = image_tag f.object.picture(:thumb), :id=>"preview_picture"
+      .col-lg-10.col-lg-offset-2
+        #progress.progress{style: "margin-top: 10px; height: 2px;"}
+          .progress-bar.progress-bar-success  
+
+  .form-actions
+    = f.button :submit , class: 'btn btn-success btn-md'
+    %script{:src => "/js/jquery.ui.widget.js"}
+    %script{:src => "/js/jquery.iframe-transport.js"}
+    %script{:src => "/js/jquery.fileupload.js"}
+    :javascript
+      $(function () {
+          $('#sponsor_picture').fileupload({
+              dataType: 'json',
+              done: function (e, data) {
+                $('#preview_picture').attr('src', data.result.path);
+              },
+              progressall: function (e, data) {
+                  var progress = parseInt(data.loaded / data.total * 100, 10);
+                  $('#progress .progress-bar').css(
+                      'width',
+                      progress + '%'
+                  );  
+              }
+          })
+          .bind('fileuploadstart', function(){
+            $('#progress .progress-bar').css(
+                'width','0%'
+            );
+          });
+      });
+
+%script{src: '/state_county.js'}
+:javascript
+  $(function(){
+    $('#sponsor_state').change(function(){
+      var text = $('option:selected', this).text();
+      $('#sponsor_county').empty();
+      if(states[text]){
+        var html = "";
+        states[text].map(function(o){
+          html += "<option>"+o+"</option>";
+        });
+        $('#sponsor_county').append(html);
+      }
+    });
+    $('#sponsor_state').trigger('change');
+  });

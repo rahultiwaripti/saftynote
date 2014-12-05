@@ -1,0 +1,45 @@
+:javascript
+  $(function(){
+    $('.fixed-table-loading').hide();
+    $('.table th:last').remove();
+    $('.table th:last').get(0).colSpan = 2;
+  });
+
+.container
+  .row
+    .table-responsive
+      %h3.bg-warning.text-center Sponsors
+      %table.table.table-striped.table-bordered.table-hover{"data-sort-name" => "name", "data-sort-order" => "asc", "data-toggle" => "table"}
+        %thead
+          %tr.bg-success
+            %th{"data-field" => "name", "data-sortable" => "true"}  Name
+            %th{"data-field" => "address", "data-sortable" => "true"}  Address
+            %th{"data-field" => "city", "data-sortable" => "true"}  City
+            %th{"data-field" => "state", "data-sortable" => "true"}  State
+            %th{"data-field" => "zip", "data-sortable" => "true"}  Zip
+            %th{"data-field" => "phone", "data-sortable" => "true"}  Phone
+            %th{"data-field" => "email", "data-sortable" => "true"}  Email Address
+            %th{"data-field" => "mobile_phone_number", "data-sortable" => "true"}  Mobile Phone Number
+            %th{"data-field" => "contact_last_name", "data-sortable" => "true"}  Contact Last Name
+            %th{"data-field" => "contact_first_name", "data-sortable" => "true"}  Contact First Name
+            %th{"data-field" => "sponsor_ship_type", "data-sortable" => "true"}  type of Sponsorship
+            %th{"data-field" => "action1", :colspan => "1"} Actions
+            %th{"data-field" => "action2", :colspan => "1"} Actions
+        %tbody
+          - @sponsors.each do |sponsor|
+            %tr
+              %td= sponsor.name
+              %td= sponsor.address
+              %td= sponsor.city
+              %td= sponsor.state
+              %td= sponsor.zip
+              %td= sponsor.phone
+              %td= sponsor.email
+              %td= sponsor.mobile_phone_number
+              %td= sponsor.contact_last_name
+              %td= sponsor.contact_first_name
+              %td= sponsor.sponsor_ship_type
+              %td= link_to 'Edit', edit_sponsor_path(sponsor) , class: "btn btn-success  btn-sm"
+              %td= link_to 'Destroy', sponsor_path(sponsor),method: :delete, data:{confirm: 'Are you sure to remove this sponsor?'} , class: "btn btn-success  btn-sm"
+      %br/
+      = link_to 'New Sponsor', new_sponsor_path , class: "btn btn-success  btn-md"

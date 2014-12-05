@@ -1,0 +1,167 @@
+<div class="authform">
+    <% if params[:query] == "serviceprovider" %>
+        <% resource.company || resource.build_company %>
+    <% end %>
+    <% if params[:query] == "user" %>
+        <% resource.profile || resource.build_profile %>
+    <% end %>    
+  
+  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => 'form'}) do |f| %>
+    <h3>Sign up</h3>
+    <%= devise_error_messages! %>
+
+    <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, :autofocus => true, class: 'form-control' %>
+    </div>
+    
+    <!--
+    <div class="form-group">
+      <%#= f.label :role %>
+      <%#= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>        
+    </div>-->
+    <%= f.hidden_field :role, :value => params[:query] %>
+    
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.email_field :email, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :password %>
+      <%= f.password_field :password, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation, class: 'form-control' %>
+    </div>
+    
+    <!--<%#= f.fields_for :profile do |profile_form| %>-->
+    <% if params[:query] == "user" %>
+    <%= f.fields_for :profile do |profile_form| %>
+        <div class="form-group">
+            <%= profile_form.label :first_name %>
+            <p><%= profile_form.text_field :first_name %></p>
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :last_name %>
+            <p><%= profile_form.text_field :last_name %></p>
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :phone_number %>
+            <p><%= profile_form.text_field :phone_number %></p>
+        </div>    
+        <div class="form-group">
+            <%= profile_form.label :city %>
+            <p><%= profile_form.text_field :city %></p>
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :state %>
+            <p><%#= profile_form.text_field :state %>
+                <%= profile_form.select(:state, options_for_select(us_states, "CA")) %>
+            </p>
+        </div>
+
+        <div class="form-group">
+            <%= profile_form.label :zip %>
+            <p><%= profile_form.text_field :zip %></p>
+        </div>
+<fieldset>    
+        <div class="form-group">
+            <%= profile_form.label :contact_method %>
+            <p><%#= profile_form.text_field :contact_method %>
+                  <% Profile::contact_types.each do |a_value| %>
+                    <p>
+                        <%= profile_form.check_box( :contact_method, { :multiple => true }, a_value, nil) %>
+                        <%= profile_form.label a_value %>
+                    </p>
+                  <% end %>
+            </p>
+        </div>
+</fieldset>
+    <% end %>
+    <% end %>
+    
+    <% if params[:query] == "serviceprovider" %>
+    <%= f.fields_for :company do |profile_form| %>
+        <div class="form-group">
+            <%= profile_form.label :company_name %>
+            <p><%= profile_form.text_field :company_name %></p>
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :business_name %>
+            <p><%= profile_form.text_field :business_name %></p>
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :provider_type %>
+            <!--todo required filed with options Transport and Home_Health-->
+            <p><%= profile_form.select( :provider_type, [["Transport","Transport"], ["Home Health","Home_Health"]]) %></p>
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :telephone %>
+            <p><%= profile_form.text_field :telephone %></p>
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :mobile_phone_number %>
+            <p><%= profile_form.text_field :mobile_phone_number %></p>
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :get_notification %>
+            <p> 
+                <%= profile_form.label :get_notification, "Yes", :value => "true"  %>
+                <%= profile_form.radio_button :get_notification, true %>
+                <%= profile_form.label :get_notification, "No", :value => "false" %>
+                <%= profile_form.radio_button :get_notification, false, :checked => true %>
+            </p>            
+        </div>
+        <% if params[:query] == "serviceprovider" %>
+        <div class="form-group">
+            <%= profile_form.label :address %>
+            <p><%= profile_form.text_field :address %></p>
+        </div>
+        <% end %>    
+        <div class="form-group">
+            <%= profile_form.label :city %>
+            <p><%= profile_form.text_field :city %></p>
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :state %>
+            <p><%#= profile_form.text_field :state %>
+                <%= profile_form.select(:state, options_for_select(us_states, "CA")) %>
+            </p>
+        </div>
+
+        <div class="form-group">
+            <%= profile_form.label :zip %>
+            <p><%= profile_form.text_field :zip %></p>
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :contact_last_name %>
+            <p><%= profile_form.text_field :contact_last_name %></p>
+        </div>    
+        <div class="form-group">
+            <%= profile_form.label :contact_first_name %>
+            <p><%= profile_form.text_field :contact_first_name %></p>
+        </div>        
+    <% end %>    
+    <% end %>
+        <div class="form-group">
+            <%= f.check_box :terms %>
+            <%= f.label :terms, "Please accept EULA" %>
+            <%#= link_to "Please accept Terms".html_safe, "#", :onclick => "popUp('/popups/_user_terms_conditions.html', 'console', 400, 200);return false;", :class => '' %>
+            <% if params[:query] == "user" %>
+                <%= render "popups/user_terms_conditions" %>
+            <% end %>
+            
+            <% if params[:query] == "serviceprovider" %>
+                <%= render "popups/provider_terms_conditions" %>
+            <% end %>
+        </div>    
+    
+    
+     <%= f.submit 'Sign up', :class => 'btn btn-success right' %>
+
+  <% end %>
+    <div class="row">
+        <%= render :partial => "devise/shared/links" %>
+    </div>    
+</div>

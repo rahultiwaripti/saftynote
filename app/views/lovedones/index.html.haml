@@ -1,0 +1,123 @@
+:css
+	.btn{
+		color: #fff !important;
+	}
+
+:javascript
+	$(function(){
+		$('.fixed-table-loading').hide();
+		$('.suggestion-search').keyup(function(e){
+			var key = e.target.value.toLowerCase();
+			if(key==""){
+				$('.table tr').show();
+			}
+			$('.table tr:gt(0)').each(function(){
+				if($(this).text().toLowerCase().indexOf(key)==-1){
+					$(this).hide();
+				}
+			});
+		});
+	});
+.container
+	.row
+		.table-responsive{style: "position: relative;"}
+			%h3.bg-warning.text-center Loved Ones
+			%div{style:"margin: 10px 0;"}
+				- if current_user.admin?
+					Search:
+					%input.suggestion-search{:placeholder => "Search...", :type => "text"}/
+					&nbsp;&nbsp;&nbsp; Count of Loved Ones: 
+					%span#lovedones=@lovedones_all.count
+
+			%table.table.table-striped.table-bordered.table-hover{"data-sort-name" => "name", "data-sort-order" => "asc", "data-toggle" => "table"}
+				%thead
+					%tr.bg-success
+						%th{"data-field" => "name", "data-sortable" => "true"} Name
+						%th{"data-field" => "city", "data-sortable" => "true"} City
+						%th{"data-field" => "county", "data-sortable" => "true"} County
+						%th{"data-field" => "state", "data-sortable" => "true"} State
+						%th{"data-field" => "primary_contact", "data-sortable" => "true"} Primary Contact
+						%th{"data-field" => "date_time", "data-sortable" => "true"} Date/Time
+
+						%th{:colspan => "4"} Actions
+				%tbody
+					- if current_user.admin?
+						- @lovedones_all.each do |lovedone|
+							%tr
+								%td.tt-name
+									= "#{lovedone.name}"
+									\ 
+								%td= lovedone.city
+								%td= lovedone.county
+								%td= lovedone.state
+								%td
+									- if lovedone.primary_contact!=nil && lovedone.primary_contact.user!=nil
+										= lovedone.primary_contact.user.name
+								%td= lovedone.created_at.strftime("%m/%d/%Y %H:%M")
+								%td
+									= link_to edit_lovedone_path(lovedone), class: "btn btn-success	btn-sm" do
+										%i.glyphicon.glyphicon-edit  Edit
+					- else
+						- @lovedones.each do |lovedone|
+							%tr
+								%td.tt-name
+									= "#{lovedone.name}"
+									\ 
+								%td= lovedone.city
+								%td= lovedone.county
+								%td= lovedone.state
+								%td= lovedone.primary_contact.user.name
+								%td= lovedone.created_at.strftime("%m/%d/%Y %H:%M")
+								%td
+									= link_to edit_lovedone_path(lovedone), class: "btn btn-success	btn-sm" do
+										%i.glyphicon.glyphicon-edit  Edit
+			%br/
+			= link_to 'New Loved One', new_lovedone_path , class: "btn btn-success	btn-md hidden", style:"position: absolute;position: absolute; display: block;right: 0;top: 30px;"
+		- if false
+			.table-responsive
+				%h3.bg-warning.text-center Following Loved Ones
+				%table.table.table-striped.table-bordered.table-hover
+					%thead
+						%tr.bg-success
+							%th Name
+							%th Primary Contact
+							%th Phone
+							%th Email
+							%th{:colspan => "4"} Actions
+					%tbody
+						- @following_followers.each do |follower|
+							- if follower.lovedone
+								%tr
+									%td
+										= follower.lovedone.first_name
+										\ #{follower.lovedone.middle_initial} #{follower.lovedone.last_name} 
+									%td= follower.lovedone.primary_contact.user.name
+									%td= follower.lovedone.primary_contact.user.profile.phone_number
+									%td= follower.lovedone.primary_contact.user.email
+									%td= link_to 'Followers', familymembers_path
+				%br/
+			.table-responsive
+				%h3.bg-warning.text-center Invited Loved Ones
+				%table.table.table-striped.table-bordered.table-hover
+					%thead
+						%tr.bg-success
+							%th Name
+							%th Primary Contact
+							%th Phone
+							%th Email
+							%th{:colspan => "4"} Actions
+					%tbody
+						- @invited_followers.each do |follower|
+							- if follower.lovedone
+								%tr
+									%td
+										= follower.lovedone.first_name
+										\ #{follower.lovedone.middle_initial} #{follower.lovedone.last_name} 
+									%td= follower.lovedone.primary_contact.user.name
+									%td= follower.lovedone.primary_contact.user.profile.phone_number
+									%td= follower.lovedone.primary_contact.user.email
+									%td= link_to 'Show', follower.lovedone
+									%td= link_to 'Followers', lovedone_followers_path(follower.lovedone)
+				%br/
+
+

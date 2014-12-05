@@ -1,0 +1,25 @@
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr.bg-success
+      %th Employee
+      %th Loved One
+      %th Sent to
+      %th Status
+      %th Type
+      / <th colspan="3"></th>
+  %tbody
+    - unless @notifications.nil?
+      - @notifications.each do |notification|
+        %tr
+          %td= notification.employee.name
+          %td= notification.lovedone.first_name if  notification.lovedone && notification.lovedone.first_name
+          %td
+            - if notification.follower
+              = notification.follower.user.name
+            - elsif  notification.primary_contact
+              = notification.primary_contact.user.name
+          %td= notification.status
+          %td= notification.notification_type
+&nbsp;
+- if request.url.index('calculations')==nil
+  =link_to 'Caculate Notifications', calc_notification_url, class: 'btn btn-success pull-right'

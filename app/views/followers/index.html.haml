@@ -1,0 +1,77 @@
+:javascript
+	$(function(){
+		$('.fixed-table-loading').hide();
+		$('#myModal').on('show.bs.modal', function (e) {
+			$('select', this).get(0).value = '';
+		  $('#family_frame').attr('src', 'about:blank');
+		});
+	});
+	function change_family_member(obj){
+		if(obj.value==""){
+			$('#family_frame').attr('src', 'about:blank');
+			return;
+		}
+		var src = $('#family_frame').attr('data-src');
+		$('#family_frame').attr('src', src.replace('lovedone_id', obj.value));
+	}
+:css
+	body .modal-dialog {
+	    width: 800px;
+	}
+.col-md-offset-1.col-md-10
+	- if request.url.index("admin")==nil
+		%h3 Followers
+	- else
+		%h3 Family members
+	%input{type:'hidden', id:'headtype', value:'true'}
+	%a.btn.btn-success.pull-right{"data-target" => "#myModal", "data-toggle" => "modal"} View employees
+	#myModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+		.modal-dialog
+			.modal-content
+				.modal-header
+					%button.close{"data-dismiss" => "modal", :type => "button"}
+						%span{"aria-hidden" => "true"} ×
+						%span.sr-only Close
+					%h4#myModalLabel.modal-title
+						%h3 
+							Add New Family Members for Loved One: 
+							%select{onchange:"change_family_member(this)"}
+								%option
+								- @lovedones.each do |lovedone|
+									%option{value: lovedone.id}= "#{lovedone.last_name} #{lovedone.first_name}"
+				.modal-body
+					%iframe{id:"family_frame", :'data-src'=>new_lovedone_follower_path('lovedone_id'), width: '600', height: '500', frameborder: 0, name:'family_frame'}
+				.modal-footer
+					%button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+	%h4.pull-left 
+		Count of Loved Ones: 
+		%span#lovedones=@followers.count
+	%table.table.table-hover{"data-sort-name" => "name", "data-sort-order" => "asc", "data-toggle" => "table"}
+		%thead
+			%tr
+				%th{"data-field" => "name", "data-sortable" => "true"} User
+				%th{"data-field" => "lvoedone", "data-sortable" => "true"} Loved One
+				%th{"data-field" => "status", "data-sortable" => "true"} Request status
+				%th{"data-field" => "actions", :colspan => "1"}
+				%th{"data-field" => "actions1", :colspan => "1"}
+		%tbody
+			- @followers.each do |follower|
+				- if follower.lovedone
+					%tr
+						%td= follower.user.name if follower.user && follower.user.name
+						%td= follower.lovedone.first_name if follower.lovedone && follower.lovedone.first_name
+						%td= follower.request_status
+						%td
+							- unless current_user.admin?
+								= link_to 'Edit', edit_lovedone_follower_url(follower.lovedone, follower)
+						%td
+							= link_to 'Delete', lovedone_follower_url(follower.lovedone, follower), method: :delete, data: { confirm: 'Are you sure?' }
+	%br/
+	- unless current_user.admin?
+		= link_to 'New Follower', new_lovedone_follower_path
+
+
+
+
+
+

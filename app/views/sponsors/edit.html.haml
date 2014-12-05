@@ -1,0 +1,14 @@
+.row
+  .col-md-8.col-md-offset-2
+    .panel.panel-success
+      .panel-heading
+        %h3.panel-title Editing sponsor
+      .panel-body
+        = render 'form'
+      .panel-footer
+        %td>= link_to 'Show', @sponsor , class: 'btn btn-success btn-md'
+        |
+        %td= link_to 'Back', sponsors_path, class: 'btn btn-success btn-md'
+        %td
+          %span.pull-right
+            = link_to 'Delete', @sponsor, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-md'

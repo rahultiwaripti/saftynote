@@ -1,0 +1,7 @@
+<% provide(:title, "SafetyNotice.com - Communicaiton for those who can't !") %>
+<% if current_user %>
+	<h3>Welcome</h3>
+  <% if current_user.company && current_user.company.pending? %>
+      Your account is not yet approved by Administrator. Please <%= link_to 'Sign in', new_user_session_path %> after few days.
+  <% end %>
+<% end %>

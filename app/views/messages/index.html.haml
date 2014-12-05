@@ -1,0 +1,156 @@
+:javascript
+	var apiURL = '/api';
+	var company_id = "#{@company.id}";
+	var lovedones = {};
+	var provider_type = "#{@company.provider_type}";
+	var employee_id = "";
+	if(provider_type=='Home_Health'){
+		var button1 = 'Arrival';
+		var button2 = 'Departure';
+	}else{
+		var button1 = 'Pick Up';
+		var button2 = 'Drop Off';
+	}
+
+
+	var get_lovedones = function(){
+		$.get('/companies/'+company_id+'/lovedones', function(response){
+			var html = '';
+			
+			response.lovedones.map(function(o){
+			var empname=o.first_name+' '+o.last_name;
+				lovedones[o.id+''] = o;
+				html += "<tr>";
+				html += "<td>"+o.last_name + ", " + o.first_name+"</td>";
+				html += "<td>"+o.date_of_birth+"</td>";
+				html += "<td><a class='btn btn-success btn-sm' onclick='select_lovedone(this)' data-id='"+o.id+"' data-ename='"+empname+"'>Select</a></td>";
+			});
+			$('.lovedones').empty().html(html);
+		});
+	};
+
+
+	var get_active_lovedones = function(){
+		$.get('/companies/'+company_id+'/active_lovedones', function(response){
+			var html = '';
+			var button1_disabled, button2_disabled, button3_disabled;
+			response.active_lovedones.map(function(o){
+				var status = o.status;
+				var trip_id = o.trip_id;
+				var employee_id = o.employee_id;
+				var o = o.lovedone;
+				html += "<tr>";
+				html += "<td>"+o.last_name + ", " + o.first_name+"</td>";
+				html += "<td>"+o.date_of_birth+"</td>";
+				button1_disabled='', button2_disabled='', button3_disabled='';
+				switch(status){
+					case 'active':
+						button2_disabled = 'disabled';
+					break;
+					case 'started':
+						button1_disabled = 'disabled';
+						button2_disabled = '';
+						button3_disabled = 'disabled';
+					break;
+				}
+				html += "<td><a class='btn btn-success "+button1_disabled+" btn-sm' \
+					onclick='pickup_lovedone(this, "+o.id+","+trip_id+","+employee_id+")'>"+button1+"</a></td>";
+				html += "<td><a class='btn btn-warning "+button2_disabled+" btn-sm' \
+					onclick='dropoff_lovedone(this, "+o.id+","+trip_id+","+employee_id+")' >"+button2+"</a></td>";
+				html += "<td><a class='btn btn-danger "+button3_disabled+" btn-sm' \
+					onclick='remove_lovedone(this, "+trip_id+")'>Remove</a></td>";
+			});
+			$('.active_lovedones').empty().html(html);
+		});
+	};
+
+	var select_lovedone = function(lovedObj){
+
+		var lovedone_id=$(lovedObj).attr('data-id');
+
+		var empname=$(lovedObj).attr('data-ename');
+			 
+
+		if(employee_id==''){
+			alert('Please select an employee');
+			return;
+		}
+
+		if(!confirm('Please confirm you wish to activate '+empname+'.')) return;
+			var trip_data = 
+				{ employee_id: employee_id, 
+					lovedone_id: lovedone_id, 
+					lovedone: lovedones[lovedone_id], 
+					status: 'active',
+					latitude: 0, 
+					longitude: 0
+				};
+
+			$.post(apiURL+"/trip/new", {trip: trip_data}, function(trip){
+				
+			});
+	};
+
+
+	var pickup_lovedone = function(o, lovedone_id, trip_id, employee_id){
+		var trip_data = {status: 'started'};
+		$(o).attr('disabled', true);
+			 
+		$.post(apiURL+"/trip/update/"+trip_id, {lovedone_id: lovedone_id, employee_id:employee_id, trip: trip_data }, function(response){  
+		 });
+
+
+	};
+
+	var dropoff_lovedone = function(o, lovedone_id, trip_id, employee_id){  
+		var trip_data = {status: 'completed'};
+		$(o).attr('disabled', true);
+		$.post(apiURL+"/trip/update/"+trip_id, {lovedone_id: lovedone_id, employee_id: employee_id, trip: trip_data, reqtype: 'dropoff'}, function(response){
+		
+		 var empt=response.emp;
+		 if(empt=="notsame")
+		 {
+		 alert("Sorry, you are not the current active provider"); 	return false;
+		 }
+		   
+
+		},'html');
+	};
+
+	var remove_lovedone = function(o, trip_id){
+		$(o).attr('disabled', true);
+		$.post(apiURL+"/trip/delete/"+trip_id, {});
+	};
+
+ 
+	$(function(){
+		get_lovedones();
+		get_active_lovedones();
+		setInterval(function(){
+			get_lovedones();
+			get_active_lovedones();
+		}, 2000);
+
+		setInterval(function(){ employee_id = $('#selected_employee').val(); }, 500);
+	})
+ 
+
+.row
+	.col-md-5.col-md-offset-1
+		.panel.panel-success
+			.panel-heading Loved Ones
+			.panel-body.form-horizontal
+				%label.control-label Select an employee.
+				.col-md-6
+					/%input.form-control.pull-left{placeholder: 'Search'}
+					%select.form-control#selected_employee
+						%option
+						- @employees.each do |employee|
+							%option{value: employee.id}=employee.name
+				.clearfix
+				%table.table.lovedones{style: 'margin-top: 10px;'}
+	.col-md-5
+		.panel.panel-success
+			.panel-heading Active Loved Ones
+			.panel-body
+				%table.table.active_lovedones{style: 'margin-top: 10px;'}

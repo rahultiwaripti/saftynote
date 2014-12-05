@@ -1,0 +1,21 @@
+= simple_form_for([@company,@employee], html: {class: 'form-horizontal'}) do |f|
+  %input{name:'nohead', :value=>"true", type: 'hidden'}
+  - if f.object.errors.messages.count>0
+    #error_explanation
+      %ul
+        - f.object.errors.messages.each do |message|
+          %li= message[0].to_s.humanize + " " + message[1][0]
+  .form-inputs
+    = f.input :name
+    = f.input :username
+    = f.input :password
+    = f.input :full_name
+  .form-actions
+    = f.button :submit , class: 'btn btn-success btn-md'
+
+
+
+
+
+
+

@@ -1,0 +1,134 @@
+- if request.url.index("new") == nil
+  :javascript
+    $(function(){
+      $('#company_status').change(function(){
+        $('form').get(0).submit();
+      });
+    });
+:css
+  body .modal-dialog {
+    width: 700px;
+  }
+  .user_company_status {
+    width: 200px;
+    position: absolute;
+    top: 40px;
+    right: 50px;
+  }
+  .user_company_status > label{ width: 50px; }
+  .user_company_status > div{ width: 130px; }
+
+:javascript
+  $(document).on('click', 'input[id=check_both]', function(){
+    var b_flag = $(this).get(0).checked;
+    $( 'input[type=checkbox]', $(this).parents('div#contact-method')).each(function(){
+      if($(this).attr('id')!="check_both"){
+        $(this).get(0).checked = b_flag;
+      }
+    });
+  });
+  $(document).on('click', '#contact-method input[type=checkbox]', function(event){
+    var email = $('#contact-method input[type=checkbox][value=email]').get(0);
+    var text = $('#contact-method input[type=checkbox][value=text]').get(0);
+    var both = $('#contact-method input[type=checkbox][value=both]').get(0);
+    both.checked = email.checked && text.checked;
+  });
+
+
+
+- resource = @company_member
+- resource_name = resource.class.to_s.downcase
+- resource.company || resource.build_company
+- submit_url = companymembers_path + "?query=serviceprovider&adminmode=true"
+- if params[:action] == 'edit' || params[:action] == 'update'
+  - submit_url = companymembers_path + "/#{params[:id]}?query=serviceprovider&adminmode=true"
+= simple_form_for(resource, :as => resource_name, :url => submit_url, html: { :role => 'form', :class => 'form-horizontal'}) do |f|
+  - unless f.object.errors.messages.empty?
+    #error_explanation
+      %ul
+        - f.object.errors.messages.each do |message|
+          %li= message[0].to_s.humanize + " " + message[1][0]
+  = f.fields_for :company, :html=>{class: "form-horizontal"} do |company_form|
+    /= simple_form_for(@company_member, :html=>{class: "form-horizontal"}) do |f|
+    .form-inputs
+      - if current_user.admin?
+        = company_form.input :status, :collection=>Company.statuses, class:'provider-status'
+      = company_form.input :company_name
+      = company_form.input :business_name
+      = company_form.input :address
+      = company_form.input :city
+      = company_form.input :county
+      = company_form.input :state, collection: us_states
+      = company_form.input :zip
+      = company_form.input :telephone
+      = company_form.input :mobile_phone_number
+      = company_form.input :contact_last_name
+      = company_form.input :contact_first_name
+      .form-group
+        = company_form.label :contact_method, "Contact Method:", class: 'col-lg-2 control-label'
+        .col-lg-10#contact-method{:style => "margin-top: 6px;", :title => "Select how the primary contact would like to be notified.  The selections are email, text or both."}
+          - Company::contact_types.each do |a_value|
+            = company_form.label 'aa' do
+              = company_form.check_box( :contact_method, { :multiple => true}, a_value, nil)
+              = a_value.humanize
+
+            &nbsp;&nbsp;&nbsp;
+          %label
+            &nbsp;
+            %input#check_both{type:'checkbox', value:'both'} &nbsp;Both
+      = company_form.input :provider_type, collection: Company::provider_types.compact.reject{|i| i[0].blank? }
+      = image_tag company_form.object.picture(:thumb)
+      = company_form.file_field :picture, :class=>'form-control'
+      - if current_user.admin?
+        = company_form.input :featured, :as=>:boolean
+      - if params[:action] == 'new'
+        = f.input :email, autocomplete: 'off'
+        = f.input :password
+      - else
+        - if f.object.errors.messages.count > 0
+          = f.input :email, html:{autocomplete: 'off'}
+          = f.input :password
+        -else
+          .form-group.string.optional.user_company_county
+            %label.string.optional.col-lg-2.control-label{:for => "user_company_attributes_county"} Email
+            .col-lg-10
+              %input.form-control.pull-left{:value=>f.object.email, :readonly=>true}
+
+      = company_form.input :get_notification
+    .form-actions
+      = f.button :submit, class:'btn btn-success', value: 'Save'
+      - unless company_form.object.id==nil
+        %input{type:'hidden', id:'headtype', value:'true'}
+        %a.btn.btn-success{"data-target" => "#employeeModal", "data-toggle" => "modal"} View employees
+        - if current_user.admin?
+          %a.btn.btn-success{"data-target" => "#lovedoneModal", "data-toggle" => "modal"} Assign Loved Ones
+      - if params[:action] === 'edit' and current_user.admin?
+        = link_to 'Destroy', companymember_path(f.object), method: :delete, data:{confirm: 'Are you sure to delete this company?'}, class: 'btn btn-danger'
+      - unless company_form.object.new_record?
+        #employeeModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "employeeModalLabel", :role => "dialog", :tabindex => "-1"}
+          .modal-dialog
+            .modal-content
+              .modal-header
+                %button.close{"data-dismiss" => "modal", :type => "button"}
+                  %span{"aria-hidden" => "true"} ×
+                  %span.sr-only Close
+                %h4#employeeModalLabel.modal-title=raw "Employees for <strong>#{company_form.object.company_name}</strong>" 
+              .modal-body
+                %iframe{src: company_employees_path(company_form.object)+"?nohead=true", width: '100%', height: '500', frameborder: 0}
+              .modal-footer
+                %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+
+
+        #lovedoneModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "lovedoneModalLabel", :role => "dialog", :tabindex => "-1"}
+          .modal-dialog{style: "width: 900px;"}
+            .modal-content
+              .modal-header
+                %button.close{"data-dismiss" => "modal", :type => "button"}
+                  %span{"aria-hidden" => "true"} ×
+                  %span.sr-only Close
+                %h4#lovedoneModalLabel.modal-title=raw "Lovedones for <strong>#{company_form.object.company_name}</strong>" 
+              .modal-body
+                %iframe{src: company_companylovedones_path(company_form.object)+"?nohead=true", width: '100%', height: '500', frameborder: 0}
+              .modal-footer
+                %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+

@@ -1,0 +1,51 @@
+:javascript
+  $(function(){
+    $('.fixed-table-loading').hide();
+    $('.table th:last').remove();
+    $('.table th:last').get(0).colSpan = 2;
+  });
+
+.col-md-12
+  .container.relative
+    %h3 Service Providers
+    %h4.pull-left 
+    %table.table.table-hover{"data-sort-name" => "company_name", "data-sort-order" => "asc", "data-toggle" => "table"}
+      %thead
+        %tr
+          %th{"data-field" => "company_name", "data-sortable" => "true"} Company Name
+          %th{"data-field" => "biz_name", "data-sortable" => "true"} Business name
+          %th{"data-field" => "provider_type", "data-sortable" => "true"} Provider type
+          %th{"data-field" => "telephone", "data-sortable" => "true", 'data-width'=>'120'} Telephone
+          %th{"data-field" => "mobile_number", "data-sortable" => "true", 'data-width'=>'120'} Mobile phone number
+          %th{"data-field" => "notification", "data-sortable" => "true"} Get notification
+          %th{"data-field" => "address", "data-sortable" => "true"} Address
+          %th{"data-field" => "city", "data-sortable" => "true"} City
+          %th{"data-field" => "state", "data-sortable" => "true"} State
+          %th{"data-field" => "zip", "data-sortable" => "true"} Zip
+          %th{"data-field" => "contact_last", "data-sortable" => "true"} Contact last name
+          %th{"data-field" => "contact_first", "data-sortable" => "true"} Contact first name
+          %th{"data-field" => "status", "data-sortable" => "true"} Status
+          %th{"data-field" => "featured", "data-sortable" => "true"} Featured
+          %th.text-center{"data-field" => "actions"} Actions
+          %th.text-center{"data-field" => "actions1"} Actions
+      %tbody
+        - @companies.each do |company|
+          %tr
+            %td= company.company_name
+            %td= company.business_name
+            %td= company.provider_type
+            %td= company.telephone.gsub(/\)/,') ') unless company.telephone.nil?
+            %td= company.mobile_phone_number.gsub(/\)/,') ') unless company.mobile_phone_number.nil?
+            %td= company.get_notification
+            %td= company.address
+            %td= company.city
+            %td= company.state
+            %td= company.zip
+            %td= company.contact_last_name
+            %td= company.contact_first_name
+            %td= company.status
+            %td= company.featured ? 'Yes':'No'
+            %td= link_to 'Edit', edit_companymember_path(company.user) unless company.user.nil?
+            %td= link_to 'Destroy', companymember_path(company.user), method: :delete, data: { confirm: 'Are you sure?' } unless company.user.nil?
+        %br/
+        = link_to 'Add New Provider', new_companymember_path, class: 'btn btn-success absolute', style:'top: 14px; right: 14px;'

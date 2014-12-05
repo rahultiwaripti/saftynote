@@ -1,0 +1,36 @@
+<%# add navigation links to this file %>
+
+<% if user_signed_in? %>
+  <% if current_user.admin? %>
+    <li><%= link_to 'Accounts', users_path %></li>
+
+    <li><%= link_to 'Providers', admin_providers_path %></li>
+
+    <li><%= link_to 'Loved Ones', lovedones_path %></li>    
+    <li><%= link_to 'Sponsors', sponsors_path %></li>
+    <li><%= link_to 'Leads', profile_leads_path(current_user.profile) %></li>
+    <li><%= link_to 'Notifications', notifications_path %></li>
+    <li>
+        <%#= link_to 'Users', users_path(query: "admin") %>
+        <%= link_to 'Users', admin_users_path %>
+    </li>
+
+    <li><%= link_to 'Reports', admin_dashboard_path %></li>
+    
+  <% end %>
+    <!-- loved ones are accessed by only users ie., family members/primary cont-->
+    <% if current_user.user? %>
+        <li><%= link_to 'LovedOnes', lovedones_path %></li>
+        <% if current_user.profile %>
+            <li><%= link_to 'Leads', profile_leads_path(current_user.profile) %></li>
+        <% end %>
+    <% end %>
+    <!-- if user has company profile -->
+    <% if current_user.serviceprovider? %>
+        <% if current_user.company && current_user.company.approved? %>
+            <li><%= link_to 'Manage Employees', company_employees_path(current_user.company) %></li>
+            <li><%= link_to 'Track', controller: "employees", action: "track", company_id: current_user.company %></li>
+        <% end %>
+    <% end %>
+<% end %>
+

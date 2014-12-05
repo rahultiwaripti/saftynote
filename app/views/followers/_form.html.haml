@@ -1,0 +1,8 @@
+= simple_form_for([@lovedone,@follower]) do |f|
+	= f.error_notification
+	.form-inputs
+		= f.association :user
+		= f.input :request_status, collection: %w(invited requested approved ), :selected =>	"invited"
+	.form-actions
+		/ leaving like this gives grey button
+		= f.button :submit , class: 'btn btn-success btn-md'

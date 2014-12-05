@@ -1,0 +1,161 @@
+<div class="authform">
+  <h3>Edit <%= resource_name.to_s.humanize %></h3>
+    
+  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => 'form'}) do |f| %>
+    <%= devise_error_messages! %>
+    <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, :autofocus => true, class: 'form-control' %>
+    </div>
+    
+    <!--
+    <div class="form-group">
+      <%#= f.label :role %>
+      <%#= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>        
+    </div>-->
+    
+    
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.email_field :email, class: 'form-control' %>
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+    </div>
+    <fieldset>
+      <p>Leave these fields blank if you don't want to change your password.</p>
+      <div class="form-group">
+        <%= f.label :password %>
+        <%= f.password_field :password, :autocomplete => 'off', class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, class: 'form-control' %>
+      </div>
+        
+    </fieldset>
+    <% if @user.profile %>
+    <%= f.fields_for :profile do |profile_form|  %>
+        <div class="form-group">
+            <%= profile_form.label :first_name %>
+            <p><%= profile_form.text_field :first_name %></p>
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :last_name %>
+            <p><%= profile_form.text_field :last_name %></p>
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :phone_number %>
+            <p><%= profile_form.text_field :phone_number %></p>
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :city %>
+            <p><%= profile_form.text_field :city %></p>
+        </div>
+
+        <div class="form-group">
+            <%= profile_form.label :state %>
+            <p><%#= profile_form.text_field :state %>
+                <%= profile_form.select(:state, options_for_select(us_states, :selected => @user.profile.state)) %>
+            </p>
+        </div>
+
+        <div class="form-group">
+            <%= profile_form.label :zip %>
+            <p><%= profile_form.text_field :zip %></p>
+        </div>
+        <fieldset>
+        <div class="form-group">
+            <%= profile_form.label :contact_method %>
+            <p>
+                  <% Profile::contact_types.each do |a_value| %>
+                    <p>
+                        <%= profile_form.check_box( :contact_method, { :multiple => true }, a_value, nil) %>
+                        <%= profile_form.label a_value %>
+                    </p>
+                  <% end %>
+            </p>
+        </div>
+        </fieldset>
+    <% end %>
+    <% end %>
+    <% if @user.company %>
+    <%= f.fields_for :company do |profile_form|   %>
+        <div class="form-group">
+            <%= profile_form.label :company_name %>
+            <p><%= profile_form.text_field :company_name %></p>
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :business_name %>
+            <p><%= profile_form.text_field :business_name %></p>
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :provider_type %>
+            <p><%= profile_form.select( :provider_type, [["Transport","Transport"], ["Home Health","Home_Health"]]) %></p>            
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :telephone %>
+            <p><%= profile_form.text_field :telephone %></p>
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :mobile_phone_number %>
+            <p><%= profile_form.text_field :mobile_phone_number %></p>
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :get_notification %>
+            <p> 
+                <%= profile_form.label :get_notification, "Yes", :value => "true"  %>
+                <%= profile_form.radio_button :get_notification, true %>
+                <%= profile_form.label :get_notification, "No", :value => "false" %>
+                <%= profile_form.radio_button :get_notification, false %>
+            </p>            
+        </div>
+        <% if params[:query] == "serviceprovider" %>
+        <div class="form-group">
+            <%= profile_form.label :address %>
+            <p><%= profile_form.text_field :address %></p>
+        </div>
+        <% end %>    
+        <div class="form-group">
+            <%= profile_form.label :city %>
+            <p><%= profile_form.text_field :city %></p>
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :state %>
+            <p><%#= profile_form.text_field :state %>
+                <%= profile_form.select(:state, options_for_select(us_states, "CA")) %>
+            </p>
+        </div>
+
+        <div class="form-group">
+            <%= profile_form.label :zip %>
+            <p><%= profile_form.text_field :zip %></p>
+        </div>
+        <div class="form-group">
+            <%= profile_form.label :contact_last_name %>
+            <p><%= profile_form.text_field :contact_last_name %></p>
+        </div>    
+        <div class="form-group">
+            <%= profile_form.label :contact_first_name %>
+            <p><%= profile_form.text_field :contact_first_name %></p>
+        </div>        
+    <% end %>
+    <% end %>
+    
+    <fieldset>
+      <p>You must enter your current password to make changes.</p>
+      <div class="form-group">
+        <%= f.label :current_password %>
+        <%= f.password_field :current_password, class: 'form-control' %>
+      </div>
+    </fieldset>
+    <%#= f.submit 'Update', :class => 'button right' %>
+    <%= f.submit 'Update', :class => 'btn btn-success right' %>
+
+  <% end %>
+</div>
+<div class="authform">
+<h3>Cancel Account</h3>
+<p>Unhappy? We'll be sad to see you go.</p>
+<%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-success right' %>
+</div>

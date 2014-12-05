@@ -1,0 +1,46 @@
+:javascript
+	$(function(){
+		$('input[type=submit]').click(function(){
+			$(this).addClass('disabled');
+		});
+	});
+
+.container
+	.row
+		.col-md-12
+			.panel.panel-default
+				.panel-body
+					%h3 History
+					= simple_form_for(@notification, url: calc_notification_post_url, html:{class:'form-inline'})  do |f|
+						= f.input :created_at, label: 'From:', as: :date, class: 'pull-left'
+						= f.input :updated_at, label: 'To:', as: :date, class: 'pull-left'
+						= f.submit "Calculate", class: 'btn btn-primary'
+					= render 'list'
+					%h3 Invoices
+					%table.table.table-bordered
+						%thead
+							%tr.bg-success
+								%th Sponsored Company
+								%th Message count
+								%th Amount&nbsp;(Message Count x Fee)
+								%th Actions
+						%tbody
+							- if !@invoices.nil?
+								- @invoices.each do |index, invoice|
+									- amount = invoice[:message_count] * @fee.to_i
+									- currnet_date = Time.now.strftime("%m/%d/%m/%Y %H:%M")
+									%tr
+										%td=Sponsor.find(invoice[:sponsor_id]).name
+										%td=invoice[:message_count]
+										%td=amount
+										%td
+											= simple_form_for(@invoice, html:{target:'invoice_frame'}) do |invoice_form|
+												= invoice_form.hidden_field :sponsor_id, value: invoice[:sponsor_id]
+												= invoice_form.hidden_field :amount, value: amount
+												= invoice_form.hidden_field :title, value: "Invoice for the message notification of sponsored Company (#{currnet_date})"
+												= invoice_form.hidden_field :start_date, :value => @from
+												= invoice_form.hidden_field :end_date, :value => @to
+												= invoice_form.hidden_field :message_count, :value => invoice[:message_count]
+												= invoice_form.hidden_field :ids, :value => invoice[:ids][1..10000]
+												= invoice_form.submit 'Send Invoice', class: 'btn btn-success btn-sm'
+	%iframe{name: 'invoice_frame', width:1, height:1, frameborder:0}

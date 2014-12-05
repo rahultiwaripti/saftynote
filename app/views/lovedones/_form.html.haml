@@ -1,0 +1,110 @@
+:javascript
+  $(function(){
+      $( "#lovedone_date_of_birth" ).datepicker({"dateFormat":"mm/dd/yy", yearRange:"1900:"+(new Date()).getFullYear(),
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        currentText: '',
+        closeText: 'Done',
+        onChangeMonthYear: function(year, month, instance){
+          var d = (instance.currentDay>0)?instance.currentDay:1;
+          instance.input.get(0).value = month+"/"+d+"/"+year;
+        }
+      });
+      $.datepicker._selectDateOverload = $.datepicker._selectDate;
+      $.datepicker._selectDate = function(id, dateStr) {
+          var target = $(id);
+          var inst = this._getInst(target[0]);
+          inst.inline = true;
+          $.datepicker._selectDateOverload(id, dateStr);
+          inst.inline = false;
+          this._updateDatepicker(inst);
+      }
+
+      jQuery.datepicker._hideDatepickerEx = jQuery.datepicker._hideDatepicker;
+  });
+:css
+  .ui-datepicker-current{ display: none; }
+
+= simple_form_for(@lovedone, html: {class: 'form-horizontal'}) do |f|
+  = f.error_notification
+  .form-group
+    = f.label :first_name, 'First Name', class: 'col-md-3 control-label'
+    .col-md-7
+      = f.text_field :first_name, class: 'form-control'
+  .form-group
+    = f.label :middle_initial, 'Middle intial', class: 'col-md-3 control-label'
+    .col-md-7
+      = f.text_field :middle_initial, class: 'form-control'
+  .form-group
+    = f.label :last_name, 'Last Name', class: 'col-md-3 control-label'
+    .col-md-7
+      = f.text_field :last_name, class: 'form-control'
+  .form-group
+    = f.label :gender, 'Gender:', class: 'col-md-3 control-label'
+    .col-md-7{:style => "margin-top: 6px;", :title => "Check the appropriate box for the loved one's gender.  This information is also used to distinguish two people with the same name."}
+      %label
+        Male #{f.radio_button :gender, true}
+      %label{:style => "margin-left: 20px;"}
+        Female #{f.radio_button :gender, false}
+  .form-group
+    = f.label :date_of_birth, 'Date of Birth:', class: 'col-md-3 control-label'
+    .col-md-7{:title => "This date is used to distinguish two people with the same name."}
+      = f.text_field :date_of_birth, class: 'form-control date-of-birth', placeholder: 'Date of Birth', required: true, :value => (f.object.date_of_birth.strftime('%m/%d/%Y') if f.object.date_of_birth)
+
+  .form-group
+    = f.label :state,"State:", class: 'col-md-3 control-label'
+    .col-md-7{:title => "Enter the state where the loved one currently resides.  This information is also used to distinguish two people with the same name."}
+      = f.select :state, options_for_select(us_states, f.object.state), {}, { :class => 'form-control' , required: true}
+  .form-group
+    = f.label :county, 'County:', class: 'col-md-3 control-label'
+    .col-md-7{:title => ""}
+      = f.select :county, [], {}, { :class => 'form-control' , required: true}
+  .form-group
+    = f.label :city, 'City:', class: 'col-md-3 control-label'
+    .col-md-7{:title => ""}
+      = f.text_field :city, class: 'form-control date-of-birth', placeholder: 'City', required: true
+
+
+  - unless current_user.admin?
+    .form-group
+      = f.label :zip_code, 'Zip Code:', class: 'col-md-3 control-label'
+      .col-md-7{:title => ""}
+        = f.text_field :zip_code, class: 'form-control', placeholder: 'Zip Code', required: true
+
+  .form-actions
+    /- unless current_user.admin?
+    = f.button :submit, class: 'btn btn-success btn-md', :value=>"Save"
+    /- unless current_user.admin?
+    /%a.btn.btn-success{"data-target" => "#companyModal", "data-toggle" => "modal"} Assign Companies
+    %input{type:'hidden', id:'headtype', value:'true'}
+    #companyModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "companyModalLabel", :role => "dialog", :tabindex => "-1"}
+      .modal-dialog{style: "width: 90%;"}
+        .modal-content
+          .modal-header
+            %button.close{"data-dismiss" => "modal", :type => "button"}
+              %span{"aria-hidden" => "true"} ×
+              %span.sr-only Close
+            %h4#companyModalLabel.modal-title=raw "companys for <strong>#{@lovedone.name}</strong>" 
+          .modal-body
+            %iframe{src: lovedone_lovedonecompanies_path(@lovedone)+"?nohead=true", width: '100%', height: '500', frameborder: 0}
+          .modal-footer
+            %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+
+
+%script{src: '/state_county.js'}
+:javascript
+  $(function(){
+    $('#lovedone_state').change(function(){
+      var text = $('option:selected', this).text();
+      $('#lovedone_county').empty();
+      if(states[text]){
+        var html = "";
+        states[text].map(function(o){
+          html += "<option>"+o+"</option>";
+        });
+        $('#lovedone_county').append(html);
+      }
+    });
+    $('#lovedone_state').trigger('change');
+  });

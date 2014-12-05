@@ -1,0 +1,1787 @@
+  [1m[36m (111.6ms)[0m  [1mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (217.6ms)[0m  CREATE UNIQUE INDEX `unique_schema_migrations`  ON `schema_migrations` (`version`) 
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Migrating to DeviseCreateUsers (20140616074029)
+  [1m[35m (95.6ms)[0m  CREATE TABLE `users` (`id` int(11) auto_increment PRIMARY KEY, `email` varchar(255) DEFAULT '' NOT NULL, `encrypted_password` varchar(255) DEFAULT '' NOT NULL, `reset_password_token` varchar(255), `reset_password_sent_at` datetime, `remember_created_at` datetime, `sign_in_count` int(11) DEFAULT 0 NOT NULL, `current_sign_in_at` datetime, `last_sign_in_at` datetime, `current_sign_in_ip` varchar(255), `last_sign_in_ip` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (167.4ms)[0m  [1mCREATE UNIQUE INDEX `index_users_on_email`  ON `users` (`email`) [0m
+  [1m[35m (175.8ms)[0m  CREATE UNIQUE INDEX `index_users_on_reset_password_token`  ON `users` (`reset_password_token`) 
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140616074029')
+  [1m[36m (53.7ms)[0m  [1mCOMMIT[0m
+Migrating to AddNameToUsers (20140616074031)
+  [1m[35m (227.3ms)[0m  ALTER TABLE `users` ADD `name` varchar(255)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140616074031')
+  [1m[36m (40.5ms)[0m  [1mCOMMIT[0m
+Migrating to AddConfirmableToUsers (20140616074034)
+  [1m[35m (242.8ms)[0m  ALTER TABLE `users` ADD `confirmation_token` varchar(255)
+  [1m[36m (234.8ms)[0m  [1mALTER TABLE `users` ADD `confirmed_at` datetime[0m
+  [1m[35m (243.2ms)[0m  ALTER TABLE `users` ADD `confirmation_sent_at` datetime
+  [1m[36m (228.1ms)[0m  [1mALTER TABLE `users` ADD `unconfirmed_email` varchar(255)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140616074034')[0m
+  [1m[35m (40.5ms)[0m  COMMIT
+Migrating to AddRoleToUsers (20140616074039)
+  [1m[36m (217.6ms)[0m  [1mALTER TABLE `users` ADD `role` int(11)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140616074039')[0m
+  [1m[35m (40.5ms)[0m  COMMIT
+Migrating to CreateLovedones (20140616112806)
+  [1m[36m (99.3ms)[0m  [1mCREATE TABLE `lovedones` (`id` int(11) auto_increment PRIMARY KEY, `last_name` varchar(255), `first_name` varchar(255), `middle_initial` varchar(255), `nick_name` varchar(255), `date_of_birth` date, `gender` varchar(255), `city` varchar(255), `country` varchar(255), `state` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140616112806')[0m
+  [1m[35m (48.9ms)[0m  COMMIT
+Migrating to CreatePrimaryContacts (20140616124752)
+  [1m[36m (99.5ms)[0m  [1mCREATE TABLE `primary_contacts` (`id` int(11) auto_increment PRIMARY KEY, `lovedone_id` int(11), `user_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140616124752')[0m
+  [1m[35m (48.9ms)[0m  COMMIT
+Migrating to AddPrimaryContactIdToLovedones (20140617084551)
+  [1m[36m (225.9ms)[0m  [1mALTER TABLE `lovedones` ADD `primary_contact_id` int(11)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140617084551')[0m
+  [1m[35m (40.5ms)[0m  COMMIT
+Migrating to CreateProfiles (20140619044816)
+  [1m[36m (90.9ms)[0m  [1mCREATE TABLE `profiles` (`id` int(11) auto_increment PRIMARY KEY, `last_name` varchar(255), `first_name` varchar(255), `middle_initial` varchar(255), `nick_name` varchar(255), `date_of_birth` date, `gender` varchar(255), `address` varchar(255), `city` varchar(255), `country` varchar(255), `state` varchar(255), `zip` varchar(255), `contact_method` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140619044816')[0m
+  [1m[35m (41.8ms)[0m  COMMIT
+Migrating to AddUserIdToProfiles (20140619052935)
+  [1m[36m (217.6ms)[0m  [1mALTER TABLE `profiles` ADD `user_id` int(11)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140619052935')[0m
+  [1m[35m (40.5ms)[0m  COMMIT
+Migrating to FixColumnDobName (20140619085925)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140619085925')
+  [1m[36m (39.9ms)[0m  [1mCOMMIT[0m
+Migrating to CreateCompanies (20140619183940)
+  [1m[35m (90.9ms)[0m  CREATE TABLE `companies` (`id` int(11) auto_increment PRIMARY KEY, `company_name` varchar(255), `business_name` varchar(255), `provider_type` varchar(255), `telephone` varchar(255), `mobile_phone_number` varchar(255), `get_notification` tinyint(1), `user_id` int(11), `address` varchar(255), `city` varchar(255), `country` varchar(255), `state` varchar(255), `zip` varchar(255), `contact_last_name` varchar(255), `contact_first_name` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140619183940')
+  [1m[36m (48.9ms)[0m  [1mCOMMIT[0m
+Migrating to CreateFollowers (20140620122019)
+  [1m[35m (91.2ms)[0m  CREATE TABLE `followers` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `lovedone_id` int(11), `request_status` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (167.5ms)[0m  [1mCREATE  INDEX `index_followers_on_user_id`  ON `followers` (`user_id`) [0m
+  [1m[35m (159.2ms)[0m  CREATE  INDEX `index_followers_on_lovedone_id`  ON `followers` (`lovedone_id`) 
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140620122019')
+  [1m[36m (40.9ms)[0m  [1mCOMMIT[0m
+Migrating to CreateEmployees (20140621043607)
+  [1m[35m (92.2ms)[0m  CREATE TABLE `employees` (`id` int(11) auto_increment PRIMARY KEY, `latitude` float, `longitude` float, `company_id` int(11), `lovedone_id` int(11), `name` varchar(255), `username` varchar(255), `password` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (175.9ms)[0m  [1mCREATE  INDEX `index_employees_on_company_id`  ON `employees` (`company_id`) [0m
+  [1m[35m (184.1ms)[0m  CREATE  INDEX `index_employees_on_lovedone_id`  ON `employees` (`lovedone_id`) 
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140621043607')
+  [1m[36m (49.1ms)[0m  [1mCOMMIT[0m
+Migrating to AddServiceStatusToEmployees (20140622134541)
+  [1m[35m (217.5ms)[0m  ALTER TABLE `employees` ADD `service_status` varchar(255)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140622134541')
+  [1m[36m (40.5ms)[0m  [1mCOMMIT[0m
+Migrating to AddStatusToCompanies (20140623140733)
+  [1m[35m (217.5ms)[0m  ALTER TABLE `companies` ADD `status` tinyint(1)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140623140733')
+  [1m[36m (40.5ms)[0m  [1mCOMMIT[0m
+Migrating to ChangeStatusTypeInCompany (20140702135405)
+  [1m[35m (318.1ms)[0m  ALTER TABLE `companies` CHANGE `status` `status` varchar(255) DEFAULT 'pending'
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140702135405')
+  [1m[36m (48.8ms)[0m  [1mCOMMIT[0m
+Migrating to AddZipCodeToLovedones (20140703020058)
+  [1m[35m (217.6ms)[0m  ALTER TABLE `lovedones` ADD `zip_code` varchar(255)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140703020058')
+  [1m[36m (40.5ms)[0m  [1mCOMMIT[0m
+Migrating to AddPhoneNumberToProfiles (20140703050455)
+  [1m[35m (284.5ms)[0m  ALTER TABLE `profiles` ADD `phone_number` varchar(255)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140703050455')
+  [1m[36m (40.6ms)[0m  [1mCOMMIT[0m
+Migrating to ChangeContactMethodToArray (20140703115537)
+  [1m[35m (342.7ms)[0m  ALTER TABLE `profiles` CHANGE `contact_method` `contact_method` text DEFAULT NULL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140703115537')
+  [1m[36m (48.9ms)[0m  [1mCOMMIT[0m
+Migrating to CreateSponsors (20140704032212)
+  [1m[35m (91.0ms)[0m  CREATE TABLE `sponsors` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `address` text, `message` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140704032212')
+  [1m[36m (40.6ms)[0m  [1mCOMMIT[0m
+Migrating to CreateNotifications (20140704052544)
+  [1m[35m (91.0ms)[0m  CREATE TABLE `notifications` (`id` int(11) auto_increment PRIMARY KEY, `employee_id` int(11), `lovedone_id` int(11), `status` varchar(255), `notification_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (167.5ms)[0m  [1mCREATE  INDEX `index_notifications_on_employee_id`  ON `notifications` (`employee_id`) [0m
+  [1m[35m (167.4ms)[0m  CREATE  INDEX `index_notifications_on_lovedone_id`  ON `notifications` (`lovedone_id`) 
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140704052544')
+  [1m[36m (40.8ms)[0m  [1mCOMMIT[0m
+Migrating to AddFollowerToNotifications (20140704054153)
+  [1m[35m (243.7ms)[0m  ALTER TABLE `notifications` ADD `follower_id` int(11)
+  [1m[36m (167.4ms)[0m  [1mCREATE  INDEX `index_notifications_on_follower_id`  ON `notifications` (`follower_id`) [0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140704054153')[0m
+  [1m[35m (40.9ms)[0m  COMMIT
+Migrating to CreateProviders (20140704063815)
+  [1m[36m (91.2ms)[0m  [1mCREATE TABLE `providers` (`id` int(11) auto_increment PRIMARY KEY, `company_id` int(11), `lovedone_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (184.2ms)[0m  CREATE  INDEX `index_providers_on_company_id`  ON `providers` (`company_id`) 
+  [1m[36m (159.2ms)[0m  [1mCREATE  INDEX `index_providers_on_lovedone_id`  ON `providers` (`lovedone_id`) [0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140704063815')[0m
+  [1m[35m (40.8ms)[0m  COMMIT
+Migrating to CreateLeads (20140704100008)
+  [1m[36m (91.1ms)[0m  [1mCREATE TABLE `leads` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `email` varchar(255), `profile_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (185.4ms)[0m  CREATE  INDEX `index_leads_on_profile_id`  ON `leads` (`profile_id`) 
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140704100008')
+  [1m[36m (40.8ms)[0m  [1mCOMMIT[0m
+Migrating to CreateTrips (20140709064805)
+  [1m[35m (74.5ms)[0m  CREATE TABLE `trips` (`id` int(11) auto_increment PRIMARY KEY, `employee_id` int(11), `lovedone_id` int(11), `status` varchar(255), `state` varchar(255), `latitude` float, `longitude` float, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (192.4ms)[0m  [1mCREATE  INDEX `index_trips_on_employee_id`  ON `trips` (`employee_id`) [0m
+  [1m[35m (175.9ms)[0m  CREATE  INDEX `index_trips_on_lovedone_id`  ON `trips` (`lovedone_id`) 
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140709064805')
+  [1m[36m (40.9ms)[0m  [1mCOMMIT[0m
+Migrating to AddSelectedPageToUsers (20140710091306)
+  [1m[35m (242.6ms)[0m  ALTER TABLE `users` ADD `selected_page` int(11)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140710091306')
+  [1m[36m (48.9ms)[0m  [1mCOMMIT[0m
+Migrating to AddPrimaryContactToNotifications (20140716041621)
+  [1m[35m (243.9ms)[0m  ALTER TABLE `notifications` ADD `primary_contact_id` int(11)
+  [1m[36m (192.4ms)[0m  [1mCREATE  INDEX `index_notifications_on_primary_contact_id`  ON `notifications` (`primary_contact_id`) [0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140716041621')[0m
+  [1m[35m (41.0ms)[0m  COMMIT
+Migrating to CreateFamilyMembers (20140727200957)
+  [1m[36m (99.2ms)[0m  [1mCREATE TABLE `family_members` (`id` int(11) auto_increment PRIMARY KEY, `lastname` varchar(255), `firstname` varchar(255), `email` varchar(255), `mobilephone` varchar(255), `contact` varchar(255), `city` int(11), `county` int(11), `state` int(11), `username` varchar(255), `password` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140727200957')[0m
+  [1m[35m (40.6ms)[0m  COMMIT
+Migrating to AddEmailToCompany (20140809040847)
+  [1m[36m (226.0ms)[0m  [1mALTER TABLE `companies` ADD `email` varchar(255)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140809040847')[0m
+  [1m[35m (48.8ms)[0m  COMMIT
+Migrating to AddCountyToProfile (20140809065128)
+  [1m[36m (269.2ms)[0m  [1mALTER TABLE `profiles` ADD `county` varchar(255)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (100.5ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140809065128')[0m
+  [1m[35m (48.5ms)[0m  COMMIT
+Migrating to AddCountyToCompanies (20140810082854)
+  [1m[36m (479.3ms)[0m  [1mALTER TABLE `companies` ADD `county` varchar(255)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140810082854')[0m
+  [1m[35m (81.9ms)[0m  COMMIT
+Migrating to AddCountyToLovedones (20140810162829)
+  [1m[36m (601.3ms)[0m  [1mALTER TABLE `lovedones` ADD `county` varchar(255)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140810162829')[0m
+  [1m[35m (48.8ms)[0m  COMMIT
+Migrating to AddPhoneNumberToLeads (20140810180350)
+  [1m[36m (259.2ms)[0m  [1mALTER TABLE `leads` ADD `phone_number` varchar(255)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140810180350')[0m
+  [1m[35m (40.5ms)[0m  COMMIT
+Migrating to AddUserTypeToProfile (20140904144018)
+  [1m[36m (218.8ms)[0m  [1mALTER TABLE `profiles` ADD `user_type` int(11) DEFAULT 0[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140904144018')[0m
+  [1m[35m (40.5ms)[0m  COMMIT
+Migrating to AddContactMethodToCompany (20140910214246)
+  [1m[36m (225.7ms)[0m  [1mALTER TABLE `companies` ADD `contact_method` varchar(255)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140910214246')[0m
+  [1m[35m (40.5ms)[0m  COMMIT
+Migrating to CreateInvitations (20140915080706)
+  [1m[36m (99.5ms)[0m  [1mCREATE TABLE `invitations` (`id` int(11) auto_increment PRIMARY KEY, `lovedone_id` int(11), `email` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140915080706')[0m
+  [1m[35m (40.6ms)[0m  COMMIT
+Migrating to AddFieldsToSponsors (20140915111013)
+  [1m[36m (250.8ms)[0m  [1mALTER TABLE `sponsors` ADD `company_name` varchar(255)[0m
+  [1m[35m (219.4ms)[0m  ALTER TABLE `sponsors` ADD `city` varchar(255)
+  [1m[36m (268.2ms)[0m  [1mALTER TABLE `sponsors` ADD `state` varchar(255)[0m
+  [1m[35m (226.5ms)[0m  ALTER TABLE `sponsors` ADD `zip` varchar(255)
+  [1m[36m (243.2ms)[0m  [1mALTER TABLE `sponsors` ADD `phone` varchar(255)[0m
+  [1m[35m (218.2ms)[0m  ALTER TABLE `sponsors` ADD `email` varchar(255)
+  [1m[36m (286.5ms)[0m  [1mALTER TABLE `sponsors` ADD `mobile_phone_number` varchar(255)[0m
+  [1m[35m (251.5ms)[0m  ALTER TABLE `sponsors` ADD `contact_last_name` varchar(255)
+  [1m[36m (260.2ms)[0m  [1mALTER TABLE `sponsors` ADD `contact_first_name` varchar(255)[0m
+  [1m[35m (218.2ms)[0m  ALTER TABLE `sponsors` ADD `sponsor_ship_type` varchar(255)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140915111013')
+  [1m[36m (40.5ms)[0m  [1mCOMMIT[0m
+Migrating to CreateSettings (20140915125352)
+  [1m[35m (142.7ms)[0m  CREATE TABLE `settings` (`id` int(11) auto_increment PRIMARY KEY, `key` varchar(255), `value` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140915125352')
+  [1m[36m (40.6ms)[0m  [1mCOMMIT[0m
+Migrating to AddSponsorIdToNotification (20140915142543)
+  [1m[35m (250.8ms)[0m  ALTER TABLE `notifications` ADD `sponsor_id` int(11)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140915142543')
+  [1m[36m (48.9ms)[0m  [1mCOMMIT[0m
+Migrating to AddInvoicedToNotification (20140915174305)
+  [1m[35m (225.8ms)[0m  ALTER TABLE `notifications` ADD `invoiced` tinyint(1) DEFAULT 0
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140915174305')
+  [1m[36m (40.6ms)[0m  [1mCOMMIT[0m
+Migrating to CreateInvoices (20140915180814)
+  [1m[35m (91.1ms)[0m  CREATE TABLE `invoices` (`id` int(11) auto_increment PRIMARY KEY, `title` varchar(255), `amount` decimal, `ids` text, `start_date` date, `end_date` date, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140915180814')
+  [1m[36m (40.6ms)[0m  [1mCOMMIT[0m
+Migrating to AddMessageCountToInvoices (20140915182848)
+  [1m[35m (294.1ms)[0m  ALTER TABLE `invoices` ADD `message_count` int(11)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140915182848')
+  [1m[36m (40.6ms)[0m  [1mCOMMIT[0m
+Migrating to AddSponsorIdToInvoices (20140915183210)
+  [1m[35m (250.6ms)[0m  ALTER TABLE `invoices` ADD `sponsor_id` int(11)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140915183210')
+  [1m[36m (40.6ms)[0m  [1mCOMMIT[0m
+Migrating to ChangeTrips (20140918192214)
+  [1m[35m (225.1ms)[0m  ALTER TABLE `trips` CHANGE `longitude` `longitude` varchar(255) DEFAULT NULL
+  [1m[36m (217.4ms)[0m  [1mALTER TABLE `trips` CHANGE `latitude` `latitude` varchar(255) DEFAULT NULL[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140918192214')[0m
+  [1m[35m (40.6ms)[0m  COMMIT
+Migrating to AddEmployeeIdToLovedones (20140925194226)
+  [1m[36m (344.6ms)[0m  [1mALTER TABLE `lovedones` ADD `employee_id` int(11)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140925194226')[0m
+  [1m[35m (40.6ms)[0m  COMMIT
+Migrating to AddToPictureToCompanies (20141007154302)
+  [1m[36m (225.9ms)[0m  [1mALTER TABLE `companies` ADD `picture_file_name` varchar(255)[0m
+  [1m[35m (209.9ms)[0m  ALTER TABLE `companies` ADD `picture_content_type` varchar(255)
+  [1m[36m (269.7ms)[0m  [1mALTER TABLE `companies` ADD `picture_file_size` int(11)[0m
+  [1m[35m (268.4ms)[0m  ALTER TABLE `companies` ADD `picture_updated_at` datetime
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20141007154302')
+  [1m[36m (40.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddFeaturedToCompanies (20141007160332)
+  [1m[35m (225.9ms)[0m  ALTER TABLE `companies` ADD `featured` tinyint(1) DEFAULT 0
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20141007160332')
+  [1m[36m (40.5ms)[0m  [1mCOMMIT[0m
+Migrating to AddToPictureToSponsor (20141119100925)
+  [1m[35m (226.0ms)[0m  ALTER TABLE `sponsors` ADD `picture_file_name` varchar(255)
+  [1m[36m (318.5ms)[0m  [1mALTER TABLE `sponsors` ADD `picture_content_type` varchar(255)[0m
+  [1m[35m (286.2ms)[0m  ALTER TABLE `sponsors` ADD `picture_file_size` int(11)
+  [1m[36m (226.6ms)[0m  [1mALTER TABLE `sponsors` ADD `picture_updated_at` datetime[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20141119100925')[0m
+  [1m[35m (40.6ms)[0m  COMMIT
+Migrating to AddAdvertiseToSponsor (20141119100953)
+  [1m[36m (217.6ms)[0m  [1mALTER TABLE `sponsors` ADD `advertise` tinyint(1) DEFAULT 0[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20141119100953')[0m
+  [1m[35m (48.9ms)[0m  COMMIT
+Migrating to AddSponsortypeToSponsors (20141120124333)
+  [1m[36m (311.5ms)[0m  [1mALTER TABLE `sponsors` ADD `sponsortype` varchar(255)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20141120124333')[0m
+  [1m[35m (40.5ms)[0m  COMMIT
+Migrating to AddCountyToSponsors (20141120130730)
+  [1m[36m (226.0ms)[0m  [1mALTER TABLE `sponsors` ADD `county` varchar(255)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20141120130730')[0m
+  [1m[35m (40.5ms)[0m  COMMIT
+Migrating to CreateEmployeeProvider (20141203083217)
+  [1m[36m (258.5ms)[0m  [1mCREATE TABLE `employees_providers` (`id` int(11) auto_increment PRIMARY KEY, `employee_id` int(11), `provider_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20141203083217')[0m
+  [1m[35m (40.6ms)[0m  COMMIT
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+
+
+Started GET "/" for 127.0.0.1 at 2014-12-03 17:12:11 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Processing by VisitorsController#index as HTML
+  Rendered visitors/index.html.erb within layouts/application (23.7ms)
+  Rendered layouts/_navigation_links.html.haml (13.5ms)
+  Rendered layouts/_navigation_sign.html.haml (1.7ms)
+  Rendered layouts/_navigation.html.erb (18.2ms)
+  Rendered layouts/_messages.html.erb (0.7ms)
+Completed 200 OK in 11516ms (Views: 11436.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/woocommerce" for 127.0.0.1 at 2014-12-03 17:13:02 +0530
+
+ActionController::RoutingError (No route matches [GET] "/woocommerce"):
+  actionpack (4.1.2.rc1) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  actionpack (4.1.2.rc1) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.2.rc1) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.2.rc1) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.2.rc1) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.2.rc1) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.2.rc1) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.2.rc1) lib/rails/rack/logger.rb:20:in `call'
+  quiet_assets (1.0.3) lib/quiet_assets.rb:23:in `call_with_quiet_assets'
+  actionpack (4.1.2.rc1) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.2) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.2) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.2.rc1) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.2.rc1) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.2) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.2.rc1) lib/rails/engine.rb:514:in `call'
+  railties (4.1.2.rc1) lib/rails/application.rb:144:in `call'
+  rack (1.5.2) lib/rack/content_length.rb:14:in `call'
+  thin (1.6.2) lib/thin/connection.rb:86:in `block in pre_process'
+  thin (1.6.2) lib/thin/connection.rb:84:in `catch'
+  thin (1.6.2) lib/thin/connection.rb:84:in `pre_process'
+  thin (1.6.2) lib/thin/connection.rb:53:in `process'
+  thin (1.6.2) lib/thin/connection.rb:39:in `receive_data'
+  eventmachine (1.0.3) lib/eventmachine.rb:187:in `run_machine'
+  eventmachine (1.0.3) lib/eventmachine.rb:187:in `run'
+  thin (1.6.2) lib/thin/backends/base.rb:73:in `start'
+  thin (1.6.2) lib/thin/server.rb:162:in `start'
+  rack (1.5.2) lib/rack/handler/thin.rb:16:in `run'
+  rack (1.5.2) lib/rack/server.rb:264:in `start'
+  railties (4.1.2.rc1) lib/rails/commands/server.rb:69:in `start'
+  railties (4.1.2.rc1) lib/rails/commands/commands_tasks.rb:81:in `block in server'
+  railties (4.1.2.rc1) lib/rails/commands/commands_tasks.rb:76:in `tap'
+  railties (4.1.2.rc1) lib/rails/commands/commands_tasks.rb:76:in `server'
+  railties (4.1.2.rc1) lib/rails/commands/commands_tasks.rb:40:in `run_command!'
+  railties (4.1.2.rc1) lib/rails/commands.rb:17:in `<top (required)>'
+  bin/rails:4:in `require'
+  bin/rails:4:in `<main>'
+
+
+  Rendered /home/ptiweb/.rvm/gems/ruby-2.1.3/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.4ms)
+  Rendered /home/ptiweb/.rvm/gems/ruby-2.1.3/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/templates/routes/_route.html.erb (19.2ms)
+  Rendered /home/ptiweb/.rvm/gems/ruby-2.1.3/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (13.4ms)
+  Rendered /home/ptiweb/.rvm/gems/ruby-2.1.3/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (281.9ms)
+
+
+Started GET "/woocommerce" for 127.0.0.1 at 2014-12-03 17:13:23 +0530
+
+ActionController::RoutingError (No route matches [GET] "/woocommerce"):
+  actionpack (4.1.2.rc1) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  actionpack (4.1.2.rc1) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.2.rc1) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.2.rc1) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.2.rc1) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.2.rc1) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.2.rc1) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.2.rc1) lib/rails/rack/logger.rb:20:in `call'
+  quiet_assets (1.0.3) lib/quiet_assets.rb:23:in `call_with_quiet_assets'
+  actionpack (4.1.2.rc1) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.2) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.2) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.2.rc1) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.2.rc1) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.2) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.2.rc1) lib/rails/engine.rb:514:in `call'
+  railties (4.1.2.rc1) lib/rails/application.rb:144:in `call'
+  rack (1.5.2) lib/rack/content_length.rb:14:in `call'
+  thin (1.6.2) lib/thin/connection.rb:86:in `block in pre_process'
+  thin (1.6.2) lib/thin/connection.rb:84:in `catch'
+  thin (1.6.2) lib/thin/connection.rb:84:in `pre_process'
+  thin (1.6.2) lib/thin/connection.rb:53:in `process'
+  thin (1.6.2) lib/thin/connection.rb:39:in `receive_data'
+  eventmachine (1.0.3) lib/eventmachine.rb:187:in `run_machine'
+  eventmachine (1.0.3) lib/eventmachine.rb:187:in `run'
+  thin (1.6.2) lib/thin/backends/base.rb:73:in `start'
+  thin (1.6.2) lib/thin/server.rb:162:in `start'
+  rack (1.5.2) lib/rack/handler/thin.rb:16:in `run'
+  rack (1.5.2) lib/rack/server.rb:264:in `start'
+  railties (4.1.2.rc1) lib/rails/commands/server.rb:69:in `start'
+  railties (4.1.2.rc1) lib/rails/commands/commands_tasks.rb:81:in `block in server'
+  railties (4.1.2.rc1) lib/rails/commands/commands_tasks.rb:76:in `tap'
+  railties (4.1.2.rc1) lib/rails/commands/commands_tasks.rb:76:in `server'
+  railties (4.1.2.rc1) lib/rails/commands/commands_tasks.rb:40:in `run_command!'
+  railties (4.1.2.rc1) lib/rails/commands.rb:17:in `<top (required)>'
+  bin/rails:4:in `require'
+  bin/rails:4:in `<main>'
+
+
+  Rendered /home/ptiweb/.rvm/gems/ruby-2.1.3/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.5ms)
+  Rendered /home/ptiweb/.rvm/gems/ruby-2.1.3/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/templates/routes/_route.html.erb (19.4ms)
+  Rendered /home/ptiweb/.rvm/gems/ruby-2.1.3/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.4ms)
+  Rendered /home/ptiweb/.rvm/gems/ruby-2.1.3/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (238.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2014-12-03 17:13:36 +0530
+Processing by VisitorsController#index as HTML
+  Rendered visitors/index.html.erb within layouts/application (0.1ms)
+  Rendered layouts/_navigation_links.html.haml (0.2ms)
+  Rendered layouts/_navigation_sign.html.haml (0.2ms)
+  Rendered layouts/_navigation.html.erb (1.6ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 8ms (Views: 7.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-12-03 17:15:07 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/sessions/new.html.erb within layouts/application (157.1ms)
+  Rendered layouts/_navigation_links.html.haml (0.3ms)
+  Rendered layouts/_navigation_sign.html.haml (0.1ms)
+  Rendered layouts/_navigation.html.erb (1.7ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 190ms (Views: 173.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-12-03 17:15:29 +0530
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"AfDl+r/sBvxhEobfaKydaisV53MJ7W4x0PP6Nuzka7Y=", "user"=>{"email"=>"nicolelevin99@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[35mUser Load (18.8ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`email` = 'nicolelevin99@gmail.com'  ORDER BY `users`.`id` ASC LIMIT 1
+Completed 401 Unauthorized in 218ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"AfDl+r/sBvxhEobfaKydaisV53MJ7W4x0PP6Nuzka7Y=", "user"=>{"email"=>"nicolelevin99@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  Rendered devise/sessions/new.html.erb within layouts/application (2.5ms)
+  Rendered layouts/_navigation_links.html.haml (0.1ms)
+  Rendered layouts/_navigation_sign.html.haml (0.1ms)
+  Rendered layouts/_navigation.html.erb (1.6ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 103ms (Views: 10.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-12-03 17:16:25 +0530
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"AfDl+r/sBvxhEobfaKydaisV53MJ7W4x0PP6Nuzka7Y=", "user"=>{"email"=>"nicolelevin99@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`email` = 'nicolelevin99@gmail.com'  ORDER BY `users`.`id` ASC LIMIT 1[0m
+Completed 401 Unauthorized in 2ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"AfDl+r/sBvxhEobfaKydaisV53MJ7W4x0PP6Nuzka7Y=", "user"=>{"email"=>"nicolelevin99@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  Rendered devise/sessions/new.html.erb within layouts/application (3.4ms)
+  Rendered layouts/_navigation_links.html.haml (0.3ms)
+  Rendered layouts/_navigation_sign.html.haml (0.2ms)
+  Rendered layouts/_navigation.html.erb (2.7ms)
+  Rendered layouts/_messages.html.erb (0.2ms)
+Completed 200 OK in 100ms (Views: 13.8ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-12-03 17:16:55 +0530
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"AfDl+r/sBvxhEobfaKydaisV53MJ7W4x0PP6Nuzka7Y=", "user"=>{"email"=>"nicolelevin99@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`email` = 'nicolelevin99@gmail.com'  ORDER BY `users`.`id` ASC LIMIT 1
+Completed 401 Unauthorized in 3ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"AfDl+r/sBvxhEobfaKydaisV53MJ7W4x0PP6Nuzka7Y=", "user"=>{"email"=>"nicolelevin99@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  Rendered devise/sessions/new.html.erb within layouts/application (2.6ms)
+  Rendered layouts/_navigation_links.html.haml (0.2ms)
+  Rendered layouts/_navigation_sign.html.haml (0.1ms)
+  Rendered layouts/_navigation.html.erb (1.7ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 97ms (Views: 10.9ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-12-03 17:17:50 +0530
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"AfDl+r/sBvxhEobfaKydaisV53MJ7W4x0PP6Nuzka7Y=", "user"=>{"email"=>"nicolelevin99@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`email` = 'nicolelevin99@gmail.com'  ORDER BY `users`.`id` ASC LIMIT 1[0m
+Completed 401 Unauthorized in 3ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"AfDl+r/sBvxhEobfaKydaisV53MJ7W4x0PP6Nuzka7Y=", "user"=>{"email"=>"nicolelevin99@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  Rendered devise/sessions/new.html.erb within layouts/application (2.8ms)
+  Rendered layouts/_navigation_links.html.haml (0.2ms)
+  Rendered layouts/_navigation_sign.html.haml (0.1ms)
+  Rendered layouts/_navigation.html.erb (1.7ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 92ms (Views: 10.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2014-12-03 17:18:05 +0530
+Processing by RegistrationsController#new as HTML
+DEPRECATION WARNING: String based terminators are deprecated, please use a lambda. (called from <class:Company> at /home/ptiweb/myapp/saftynote/sn_backend_ramm/app/models/company.rb:15)
+  Rendered devise/registrations/new.html.haml within layouts/application (91.4ms)
+  Rendered layouts/_navigation_links.html.haml (0.3ms)
+  Rendered layouts/_navigation_sign.html.haml (0.1ms)
+  Rendered layouts/_navigation.html.erb (1.8ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 173ms (Views: 110.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-12-03 17:18:11 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/sessions/new.html.erb within layouts/application (3.1ms)
+  Rendered layouts/_navigation_links.html.haml (0.3ms)
+  Rendered layouts/_navigation_sign.html.haml (0.3ms)
+  Rendered layouts/_navigation.html.erb (1.9ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 13ms (Views: 11.4ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-12-03 17:18:14 +0530
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"AfDl+r/sBvxhEobfaKydaisV53MJ7W4x0PP6Nuzka7Y=", "user"=>{"email"=>"", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+Completed 401 Unauthorized in 1ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"AfDl+r/sBvxhEobfaKydaisV53MJ7W4x0PP6Nuzka7Y=", "user"=>{"email"=>"", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  Rendered devise/sessions/new.html.erb within layouts/application (3.0ms)
+  Rendered layouts/_navigation_links.html.haml (0.2ms)
+  Rendered layouts/_navigation_sign.html.haml (0.2ms)
+  Rendered layouts/_navigation.html.erb (2.0ms)
+  Rendered layouts/_messages.html.erb (0.2ms)
+Completed 200 OK in 15ms (Views: 13.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2014-12-03 17:18:25 +0530
+Processing by RegistrationsController#new as HTML
+  Rendered devise/registrations/new.html.haml within layouts/application (0.6ms)
+  Rendered layouts/_navigation_links.html.haml (0.3ms)
+  Rendered layouts/_navigation_sign.html.haml (0.1ms)
+  Rendered layouts/_navigation.html.erb (1.9ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 14ms (Views: 12.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-12-03 17:18:26 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/sessions/new.html.erb within layouts/application (3.0ms)
+  Rendered layouts/_navigation_links.html.haml (0.3ms)
+  Rendered layouts/_navigation_sign.html.haml (0.2ms)
+  Rendered layouts/_navigation.html.erb (1.8ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 13ms (Views: 11.8ms | ActiveRecord: 0.0ms)
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT `schema_migrations`.* FROM `schema_migrations`
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-12-03 18:35:39 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"AfDl+r/sBvxhEobfaKydaisV53MJ7W4x0PP6Nuzka7Y=", "user"=>{"email"=>"nicolelevin99@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[35mUser Load (0.4ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`email` = 'nicolelevin99@gmail.com'  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (23.7ms)[0m  UPDATE `users` SET `current_sign_in_at` = '2014-12-03 13:05:40', `current_sign_in_ip` = '127.0.0.1', `last_sign_in_at` = '2014-12-03 06:45:44', `sign_in_count` = 50, `updated_at` = '2014-12-03 13:05:40' WHERE `users`.`id` = 66
+  [1m[36m (58.8ms)[0m  [1mCOMMIT[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 550ms (ActiveRecord: 83.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2014-12-03 18:35:40 +0530
+Processing by VisitorsController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+DEPRECATION WARNING: String based terminators are deprecated, please use a lambda. (called from <class:Company> at /home/ptiweb/myapp/saftynote/sn_backend_ramm/app/models/company.rb:15)
+  [1m[36mCompany Load (0.4ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`user_id` = 66 LIMIT 1[0m
+  Rendered visitors/index.html.erb within layouts/application (123.6ms)
+  Rendered layouts/_navigation_links.html.haml (17.7ms)
+  Rendered layouts/_navigation_sign.html.haml (2.0ms)
+  Rendered layouts/_navigation.html.erb (22.6ms)
+  Rendered layouts/_messages.html.erb (0.7ms)
+Completed 200 OK in 560ms (Views: 555.4ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/messages" for 127.0.0.1 at 2014-12-03 18:35:49 +0530
+Processing by MessagesController#index as HTML
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`user_id` = 66 LIMIT 1[0m
+  [1m[35mEmployee Load (12.9ms)[0m  SELECT  `employees`.* FROM `employees`   ORDER BY `employees`.`id` ASC LIMIT 1
+  [1m[36mEmployee Load (0.4ms)[0m  [1mSELECT `employees`.* FROM `employees`  WHERE `employees`.`company_id` = 44[0m
+  Rendered messages/index.html.haml within layouts/application (26.4ms)
+  Rendered layouts/_navigation_links.html.haml (0.8ms)
+  Rendered layouts/_navigation_sign.html.haml (0.2ms)
+  Rendered layouts/_navigation.html.erb (2.3ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 108ms (Views: 50.2ms | ActiveRecord: 14.6ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:35:49 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.4ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (16.2ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 94ms (Views: 29.7ms | ActiveRecord: 19.3ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:35:49 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.2ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.3ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 28ms (Views: 0.7ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:35:51 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:35:51 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 6ms (Views: 0.7ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:35:53 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:35:53 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/companies/44/track" for 127.0.0.1 at 2014-12-03 18:35:54 +0530
+Processing by EmployeesController#track as HTML
+  Parameters: {"company_id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36mEmployee Load (0.4ms)[0m  [1mSELECT `employees`.* FROM `employees`  WHERE `employees`.`company_id` = 44 AND (updated_at > '2014-12-03 13:03:54')[0m
+  Rendered employees/track.html.haml within layouts/application (10.5ms)
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`user_id` = 66 LIMIT 1
+  Rendered layouts/_navigation_links.html.haml (2.0ms)
+  Rendered layouts/_navigation_sign.html.haml (0.3ms)
+  Rendered layouts/_navigation.html.erb (3.6ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 66ms (Views: 27.1ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/messages" for 127.0.0.1 at 2014-12-03 18:35:56 +0530
+Processing by MessagesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`user_id` = 66 LIMIT 1
+  [1m[36mEmployee Load (0.1ms)[0m  [1mSELECT  `employees`.* FROM `employees`   ORDER BY `employees`.`id` ASC LIMIT 1[0m
+  [1m[35mEmployee Load (0.2ms)[0m  SELECT `employees`.* FROM `employees`  WHERE `employees`.`company_id` = 44
+  Rendered messages/index.html.haml within layouts/application (2.8ms)
+  Rendered layouts/_navigation_links.html.haml (0.9ms)
+  Rendered layouts/_navigation_sign.html.haml (0.3ms)
+  Rendered layouts/_navigation.html.erb (2.6ms)
+  Rendered layouts/_messages.html.erb (0.1ms)
+Completed 200 OK in 16ms (Views: 11.6ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:35:57 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.2ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 7ms (Views: 2.0ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:35:57 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 7ms (Views: 0.6ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:35:59 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:35:59 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 0.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:01 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:01 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 6ms (Views: 0.7ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:03 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:03 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 6ms (Views: 0.7ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:05 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:05 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 0.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:07 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:07 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:09 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.5ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:09 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:11 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.5ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:11 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 6ms (Views: 0.7ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:13 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:13 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 6ms (Views: 0.7ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:15 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:15 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.8ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 7ms (Views: 0.6ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:17 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:17 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:19 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:19 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:21 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:21 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 0.7ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:23 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:23 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.2ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 16ms (Views: 0.7ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:25 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:25 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.2ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 8ms (Views: 0.6ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:27 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:27 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 6ms (Views: 0.7ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:29 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:29 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 6ms (Views: 0.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:31 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 6ms (Views: 1.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:31 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.2ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 6ms (Views: 0.8ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:33 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:33 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 6ms (Views: 0.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:35 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:35 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 6ms (Views: 0.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:37 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:37 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 6ms (Views: 0.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:39 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:39 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 6ms (Views: 0.6ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:41 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:41 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.2ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 6ms (Views: 0.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:43 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:43 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 6ms (Views: 0.7ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:45 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:45 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 0.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:47 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:47 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:49 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:49 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 0.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:51 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:51 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 0.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:53 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:53 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:55 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 6ms (Views: 1.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:55 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.2ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 12ms (Views: 0.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:57 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:57 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:36:59 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:36:59 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:01 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:01 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:03 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:03 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:05 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:05 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 0.8ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:07 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:07 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:09 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:09 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:11 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:11 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:13 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:13 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:15 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:15 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:17 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:17 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 0.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:19 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.4ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:19 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:21 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.8ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:21 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:23 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 10ms (Views: 2.4ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:23 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 11ms (Views: 0.8ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:25 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:25 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 14ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:27 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:27 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 6ms (Views: 0.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:29 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:29 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.2ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 6ms (Views: 0.7ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:31 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.4ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:31 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:33 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.2ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.2ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 10ms (Views: 2.1ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:33 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.2ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 8ms (Views: 0.8ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:35 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 5ms (Views: 1.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:35 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 6ms (Views: 0.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:37 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:37 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 6ms (Views: 0.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:39 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.2ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36mLovedone Load (0.2ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 7ms (Views: 2.2ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:39 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1
+  [1m[36mCompany Load (0.1ms)[0m  [1mSELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44
+  [1m[36m (0.1ms)[0m  [1mSELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/companies/44/lovedones" for 127.0.0.1 at 2014-12-03 18:37:41 +0530
+Processing by CompaniesController#lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35mLovedone Load (0.1ms)[0m  SELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)
+Completed 200 OK in 5ms (Views: 1.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/companies/44/active_lovedones" for 127.0.0.1 at 2014-12-03 18:37:41 +0530
+Processing by CompaniesController#active_lovedones as */*
+  Parameters: {"id"=>"44"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`id` = 66  ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35mCompany Load (0.1ms)[0m  SELECT  `companies`.* FROM `companies`  WHERE `companies`.`id` = 44 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSELECT `providers`.`lovedone_id` FROM `providers`  WHERE `providers`.`company_id` = 44[0m
+  [1m[35m (0.1ms)[0m  SELECT id, lovedone_id, status, employee_id FROM `trips`  WHERE `trips`.`status` IN ('active', 'started')
+  [1m[36mLovedone Load (0.1ms)[0m  [1mSELECT `lovedones`.* FROM `lovedones`  WHERE `lovedones`.`id` IN (15, 16)[0m
+Completed 200 OK in 6ms (Views: 0.7ms | ActiveRecord: 0.7ms)

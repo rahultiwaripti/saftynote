@@ -1,0 +1,9 @@
+.row
+  .col-md-8.col-md-offset-2
+    .panel.panel-success
+      .panel-heading
+        %h3.panel-title New employee
+      .panel-body
+        = render 'form'
+      .panel-footer
+        %td= link_to 'Back', company_employees_path+"?nohead=#{params[:nohead]}", class: 'btn btn-success btn-md'

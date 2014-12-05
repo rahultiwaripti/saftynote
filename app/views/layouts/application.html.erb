@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "SafetyNotice.com - Communication For Those Who Can’t" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Rails Wheel Chair" %>">
+    
+    <link href="//netdna.bootstrapcdn.com/bootstrap/<%= bootstrap_version %>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bootstrap-table.min.css" />
+      
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+
+
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+
+    <link href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+    <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <script src="/jquery.cookie.js" ></script>
+    <script src="/jquery.inputmask.js" ></script>
+    <script src="/bootstrap-table.js"></script>
+    <script asrc="/jquery.tablesorter.js"></script>
+    <script asrc="/jquery.tablesorter.widgets.js"></script>
+
+    <script>
+      $(function(){
+        setTimeout(function(){$('.alert').fadeOut()}, 2000);
+        document.domain = document.domain;
+        try{
+          if(parent!=self && parent.document.getElementById('headtype')!=null){
+            console.log(parent.document.getElementById('headtype'));
+            var headtype = parent.document.getElementById('headtype').value;
+            if(headtype=="true"){
+              $('header, footer').hide();
+              $('body, main, .offset-header').css({
+                'margin-top':0,
+                'padding-top':0
+              })
+            }
+          }
+        }catch(e){
+
+        }
+      });
+    </script>
+
+  </head>
+  <body data-no-turbolink>
+    <%unless params[:nohead]=="true"%>
+      <header>
+        <%= render 'layouts/navigation' %>
+      </header>
+    <%else%>
+      <style>
+        body{margin-top: 0; padding-top:0;}
+        main{margin-top: 0;}
+        .offset-header{padding-top: 20px;}
+      </style>
+    <%end%>
+    <main role="main">
+       <%= render 'layouts/messages' %>
+       <%= yield %>
+    </main>
+  <%unless params[:nohead]%>
+ <footer class="footer">
+    <div class="container">
+      <p>Copyright © 2014 Safety Notice Corporation</p>
+<!--      <ul class="footer-links">
+        <li><a href="#">Blog</a></li>
+        <li class="muted">·</li>
+        <li><a href="#">WheelChair company</a></li>
+      </ul>
+-->
+    </div>
+  </footer>      
+  <%end%>
+<script src="//netdna.bootstrapcdn.com/bootstrap/<%= bootstrap_version %>/js/bootstrap.min.js"></script>      
+  </body>
+</html>

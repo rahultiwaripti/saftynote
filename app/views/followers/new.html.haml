@@ -1,0 +1,10 @@
+.row
+	.col-md-8.col-md-offset-2
+		.panel.panel-success
+			.panel-heading
+				%h3.panel-title New follower
+			.panel-body
+				= render 'form'
+			.panel-footer
+				- unless current_user.admin?
+					%td= link_to 'Back', lovedone_followers_path, class: 'btn btn-success btn-md'
